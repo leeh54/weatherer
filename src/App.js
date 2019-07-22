@@ -1,7 +1,9 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
-import Meme from './Meme';
+import { makeStyles, withTheme } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
+import Input from '@material-ui/core/Input';
 
 class App extends React.Component {
 
@@ -26,10 +28,17 @@ class App extends React.Component {
     return (
       <div className="App">
         <form className="App-header" onSubmit={this.getMemes}>
-          <input value={text}
+          <Input 
+          autoFocus
+          placeholder="Search"
+          value={text}
             onChange={e => this.setState({ text: e.target.value })}
           />
-          <button disabled={loading || !text} type="submit">Search</button>
+          <Button 
+          disabled={loading || !text} 
+          type="submit">
+          Enter
+          </Button>
         </form>
         <main>
           {memes.map(meme => {
@@ -41,6 +50,14 @@ class App extends React.Component {
       </div>
     );
   }
+}
+
+function Meme(props){
+  const {meme} = props
+  const url = meme.images.fixed_height.url
+  return (<div className="meme-wrap" onClick={()=>window.open(url, '_blank')}>
+    <img height="200" alt="meme" src={url} />
+  </div>)
 }
 
 export default App;
